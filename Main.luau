@@ -82,7 +82,6 @@ txt = txt:gsub("GetService", '<font color="'..cyan..'">GetService</font>')
 txt = txt:gsub("then", '<font color="'..pink..'">then</font>')
 txt = txt:gsub("Enum", '<font color="'..green..'">Enum</font>')
 txt = txt:gsub("==", '<font color="'..pink..'">==</font>')
-txt = txt:gsub("=", '<font color="'..pink..'">=</font>')
     return txt
 end 
 
