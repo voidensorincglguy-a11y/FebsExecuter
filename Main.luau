@@ -14,7 +14,7 @@ local UCC3 = Instance.new("UICorner", tb)
 local UCC4 = Instance.new("UIStroke", Command)
 local UCC5 = Instance.new("UIStroke", tb)
 
-Command.Size = UDim2.new(0.5, 0, 0.7, 0)
+Command.Size = UDim2.new(0.7, 0, 0.9, 0)
 Command.Position = UDim2.new(0.2, 0, 0.1, 0)
 Command.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 Command.Draggable = true
@@ -56,6 +56,7 @@ local function ApplyColors(txt)
     local pink = "#F92672"
     local blue = "#66D9EF"
     local yellow = "#ebd534"
+local cyan = "#34baeb"
     
     txt = txt:gsub("local", '<font color="'..pink..'">local</font>')
     txt = txt:gsub("function", '<font color="'..pink..'">function</font>')
@@ -65,6 +66,10 @@ local function ApplyColors(txt)
     txt = txt:gsub("true", '<font color="'..yellow..'">true</font>')
     txt = txt:gsub("false", '<font color="'..yellow..'">false</font>')
     txt = txt:gsub("return", '<font color="'..pink..'">return</font>')
+txt = txt:gsub("new", '<font color="'..cyan..'">new</font>')
+txt = txt:gsub("Connect", '<font color="'..blue..'">Connect</font>')
+txt = txt:gsub("getgenv", '<font color="'..cyan..'">getgenv</font>')
+
     return txt
 end 
 
