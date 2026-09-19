@@ -106,26 +106,3 @@ btn.TextSize = 20
 btn.MouseButton1Click:Connect(function()
     loadstring(tb.Text)()
 end)
-    local newSize = UDim2.new(ScaleX, 0, ScaleY, 0)
-    sf.CanvasSize = newSize
-    tb.Size = newSize
-    hl.Size = newSize
-    
-    -- Continuously tracks sizing layout tweaks but lets Focus Lost/Gain manage structural transparency
-    if not tb:IsFocused() then
-        hl.Text = ApplyColors(tb.Text)
-    end
-end)
-
--- 5. EXECUTE BUTTON
-btn.Text = "Execute"
-btn.Size = UDim2.new(0.9, 0, 0.2, 0)
-btn.Position = UDim2.new(0.05, 0, 0.7, 0)
-btn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-btn.Font = Enum.Font.Code
-btn.TextSize = 20
-
-btn.MouseButton1Click:Connect(function()
-    loadstring(tb.Text)()
-end)
