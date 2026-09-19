@@ -59,6 +59,7 @@ local function ApplyColors(txt)
 local cyan = "#34baeb"
 local orange = "#fc5e03"
 local wpink = "#d442f5"
+local green = "#149e11"
 
     txt = txt:gsub("local", '<font color="'..pink..'">local</font>')
     txt = txt:gsub("function", '<font color="'..pink..'">function</font>')
@@ -78,6 +79,10 @@ txt = txt:gsub("InvokeServer", '<font color="'..blue..'">InvokeServer</font>')
 txt = txt:gsub("Workspace", '<font color="'..cyan..'">Workspace</font>')
 txt = txt:gsub("getrenv", '<font color="'..wpink..'">getrenv</font>')
 txt = txt:gsub("GetService", '<font color="'..cyan..'">GetService</font>')
+txt = txt:gsub("then", '<font color="'..pink..'">then</font>')
+txt = txt:gsub("Enum", '<font color="'..green..'">Enum</font>')
+txt = txt:gsub("==", '<font color="'..pink..'">==</font>')
+txt = txt:gsub("=", '<font color="'..pink..'">=</font>')
     return txt
 end 
 
