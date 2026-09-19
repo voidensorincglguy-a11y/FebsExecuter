@@ -22,8 +22,9 @@ Command.Draggable = true
 sf.Position = UDim2.new(0.05, 0, 0.05, 0)
 sf.Size = UDim2.new(0.9, 0, 0.6, 0)
 sf.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+sf.CanvasSize = UDim2.new(3, 0, 10, 0) 
 
--- 1. TEXTBOX (This is where the user types)
+-- 1. TEXTBOX (Where you type)
 tb.Size = UDim2.new(1, 0, 1, 0)
 tb.Font = Enum.Font.Code
 tb.TextXAlignment = Enum.TextXAlignment.Left
@@ -32,12 +33,12 @@ tb.MultiLine = true
 tb.ClearTextOnFocus = false
 tb.BackgroundTransparency = 1
 tb.TextColor3 = Color3.fromRGB(255, 255, 255)
-tb.TextTransparency = 1 -- Hidden by default
-tb.Text = "print(Hello world)"
+tb.TextTransparency = 1
+tb.Text = "print('Hello world')"
 tb.TextSize = 16
-tb.ZIndex = 1
+tb.ZIndex = 2
 
--- 2. VISIBLE COLOR LABEL (This displays the theme colors)
+-- 2. VISIBLE COLOR LABEL (The highlights)
 local hl = Instance.new("TextLabel", sf)
 hl.Size = UDim2.new(1, 0, 1, 0)
 hl.Font = Enum.Font.Code
@@ -45,67 +46,66 @@ hl.TextXAlignment = Enum.TextXAlignment.Left
 hl.TextYAlignment = Enum.TextYAlignment.Top
 hl.BackgroundTransparency = 1
 hl.TextColor3 = Color3.fromRGB(255, 255, 255)
-hl.RichText = true -- ALLOWS COLOR TAGS LIKE <font color="...">
+hl.RichText = true 
 hl.TextSize = 16
-hl.ZIndex = 2
-hl.Text = "print(Hello world)"
+hl.ZIndex = 1
+hl.Text = "print('Hello world')"
 
--- 3. THE SIMPLIFIED COLOR FUNCTION
+-- 3. THE CLEAN COLOR FUNCTION
 local function ApplyColors(txt)
-    -- Put your theme hex colors here
-    local keywordColor = "#F92672" -- Pink
-    local globalColor = "#66D9EF" -- Blue
-  local VarColor = "#ebd534"    -- Yellow
+    local pink = "#F92672"
+    local blue = "#66D9EF"
+    local yellow = "#ebd534"
     
-    -- Replace words with colored versions
-    txt = txt:gsub("local", '<font color="'..keywordColor..'">local</font>')
-    txt = txt:gsub("function", '<font color="'..keywordColor..'">function</font>')
-    txt = txt:gsub("end", '<font color="'..keywordColor..'">end</font>')
-    txt = txt:gsub("print", '<font color="'..globalColor..'">print</font>')
-    txt = txt:gsub("Workspace", '<font color="'..globalColor..'">game</font>')
-    txt = txt:gsub("true", '<font color="'..VarColor..'">true</font>')
-  txt = txt:gsub("false", '<font color="'..VarColor..'">false</font>')
-  txt = txt:gsub("return", '<font color="'..keywordColor..'">return</font>')
-txt = txt:gsub("return", '<font color="'..keywordColor..'"></font>')
-txt = txt:gsub("return", '<font color="'..keywordColor..'">return</font>')
+    txt = txt:gsub("local", '<font color="'..pink..'">local</font>')
+    txt = txt:gsub("function", '<font color="'..pink..'">function</font>')
+    txt = txt:gsub("end", '<font color="'..pink..'">end</font>')
+    txt = txt:gsub("print", '<font color="'..blue..'">print</font>')
+    txt = txt:gsub("game", '<font color="'..blue..'">game</font>')
+    txt = txt:gsub("true", '<font color="'..yellow..'">true</font>')
+    txt = txt:gsub("false", '<font color="'..yellow..'">false</font>')
+    txt = txt:gsub("return", '<font color="'..pink..'">return</font>')
     return txt
 end 
 
--- Run initial coloring for the default starting text
 hl.Text = ApplyColors(tb.Text)
 
 -- ========================================================
--- FOCUS LOGIC: TOGGLE NORMAL TEXT VS COLORED TEXT
+-- FOCUS LOGIC
 -- ========================================================
 
--- When you click inside to type: Show normal text, hide colors, bring textbox forward
 tb.Focused:Connect(function()
-    tb.ZIndex = 2
-    hl.ZIndex = 1
-    tb.TextTransparency = 0  -- Make normal white text visible
-    hl.Visible = false       -- Hide the colored version
+    tb.TextTransparency = 0  
+    hl.Visible = false       
 end)
 
--- When you click away or stop typing: Hide normal text, update and show colors
 tb.FocusLost:Connect(function()
-    tb.ZIndex = 1
-    hl.ZIndex = 2
-    tb.TextTransparency = 1  -- Hide raw text
-    hl.Text = ApplyColors(tb.Text) -- Process colors
-    hl.Visible = true        -- Show colored text label
+    tb.TextTransparency = 1  
+    hl.Text = ApplyColors(tb.Text) 
+    hl.Visible = true        
 end)
 
 -- ========================================================
 
--- 4. UPDATE COLORS ON TYPE
+-- 4. SIMPLIFIED UPDATE LOGIC
 tb:GetPropertyChangedSignal("Text"):Connect(function()
-    local ScaleX = (tonumber(string.len(tb.Text)) / 5)
-    local ScaleY = (tonumber(string.len(tb.Text)) / 10)
-    
-    -- Keep scale from dropping below 1 so it fits the viewport box properly
-    if ScaleX < 1 then ScaleX = 1 end
-    if ScaleY < 1 then ScaleY = 1 end
-    
+    if not tb:IsFocused() then
+        hl.Text = ApplyColors(tb.Text)
+    end
+end)
+
+-- 5. EXECUTE BUTTON
+btn.Text = "Execute"
+btn.Size = UDim2.new(0.9, 0, 0.2, 0)
+btn.Position = UDim2.new(0.05, 0, 0.7, 0)
+btn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+btn.Font = Enum.Font.Code
+btn.TextSize = 20
+
+btn.MouseButton1Click:Connect(function()
+    loadstring(tb.Text)()
+end)
     local newSize = UDim2.new(ScaleX, 0, ScaleY, 0)
     sf.CanvasSize = newSize
     tb.Size = newSize
