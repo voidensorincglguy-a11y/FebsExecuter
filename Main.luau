@@ -3,9 +3,11 @@ local player = players.LocalPlayer
 
 local screenGui = Instance.new("ScreenGui", player.PlayerGui)
 local Command = Instance.new("Frame", screenGui)
+local btn3 = Instance.new("TextButton", screenGui)
 local sf = Instance.new("ScrollingFrame", Command)
 local tb = Instance.new("TextBox", sf)
 local btn = Instance.new("TextButton", Command)
+local btn2 = Instance.new("TextButton", Command)
 local UCC6 = Instance.new("UICorner", btn)
 local UCC = Instance.new("UIStroke", btn)
 local UCC_Cmd = Instance.new("UICorner", Command)
@@ -13,11 +15,29 @@ local UCC2 = Instance.new("UICorner", sf)
 local UCC3 = Instance.new("UICorner", tb)
 local UCC4 = Instance.new("UIStroke", Command)
 local UCC5 = Instance.new("UIStroke", tb)
+local UCC6 = Instance.new("UICorner", btn2)
+local UCC7 = Instance.new("UICorner", btn3)
 
-Command.Size = UDim2.new(0.7, 0, 0.9, 0)
+Command.Size = UDim2.new(0.5, 0, 0.7, 0)
 Command.Position = UDim2.new(0.2, 0, 0.1, 0)
 Command.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-Command.Draggable = true
+
+btn2.Position = UDim2.new(0.327, 0, 0.928, 0)
+btn2.Size = UDim2.new(0.341, 0, 0.046, 0)
+btn2.BackgroundColor3 = Color3.fromRGB(0,0,0)
+btn2.Font = Enum.Font.Code
+btn2.Text = "×"
+btn2.TextColor3 = Color3.fromRGB(255,255,255)
+
+btn3.BackgroundColor3 = Color3.fromRGB(0,0,0)
+btn3.Text = "O"
+btn3.Font = Enum.Font.Code
+btn3.Draggable = true
+btn3.TextSize = 16
+btn3.TextColor3 = Color3.fromRGB(255,255,255)
+btn3.Position = UDim2.new(0.5,0,0.5,0)
+btn3.Size = UDim2.new(0.05,0,0.1,0)
+btn3.Visible = false
 
 sf.Position = UDim2.new(0.05, 0, 0.05, 0)
 sf.Size = UDim2.new(0.9, 0, 0.6, 0)
@@ -121,6 +141,16 @@ btn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 btn.TextColor3 = Color3.fromRGB(255, 255, 255)
 btn.Font = Enum.Font.Code
 btn.TextSize = 20
+
+btn2.MouseButton1Click:Connect(function()
+Command.Visible = false
+btn3.Visible = true
+end)
+
+btn3.MouseButton1Click:Connect(function()
+Command.Visible = true
+btn3.Visible = false
+end)
 
 btn.MouseButton1Click:Connect(function()
     loadstring(tb.Text)()
