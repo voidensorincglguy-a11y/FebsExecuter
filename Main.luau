@@ -48,7 +48,7 @@ hl.BackgroundTransparency = 1
 hl.TextColor3 = Color3.fromRGB(255, 255, 255)
 hl.RichText = true 
 hl.TextSize = 16
-hl.ZIndex = 1
+hl.ZIndex = 3
 hl.Text = "print('Hello world')"
 
 -- 3. THE CLEAN COLOR FUNCTION
