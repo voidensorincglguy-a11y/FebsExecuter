@@ -63,9 +63,9 @@ local function ApplyColors(txt)
     txt = txt:gsub("end", '<font color="'..keywordColor..'">end</font>')
     txt = txt:gsub("print", '<font color="'..globalColor..'">print</font>')
     txt = txt:gsub("Workspace", '<font color="'..globalColor..'">game</font>')
-    txt = txt:gsub("true", '<font color="'..globalColor..'">game</font>')
-  txt = txt:gsub("false", '<font color="'..globalColor..'">game</font>')
-  txt = txt:gsub("return", '<font color="'..gkeywordColor..'">game</font>')
+    txt = txt:gsub("true", '<font color="'..VarColor..'">game</font>')
+  txt = txt:gsub("false", '<font color="'..VarColor..'">game</font>')
+  txt = txt:gsub("return", '<font color="'..keywordColor..'">game</font>')
     return txt
 end 
 
