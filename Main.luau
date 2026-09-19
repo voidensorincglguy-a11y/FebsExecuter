@@ -66,6 +66,8 @@ local function ApplyColors(txt)
     txt = txt:gsub("true", '<font color="'..VarColor..'">true</font>')
   txt = txt:gsub("false", '<font color="'..VarColor..'">false</font>')
   txt = txt:gsub("return", '<font color="'..keywordColor..'">return</font>')
+txt = txt:gsub("return", '<font color="'..keywordColor..'"></font>')
+txt = txt:gsub("return", '<font color="'..keywordColor..'">return</font>')
     return txt
 end 
 
