@@ -57,7 +57,9 @@ local function ApplyColors(txt)
     local blue = "#66D9EF"
     local yellow = "#ebd534"
 local cyan = "#34baeb"
-    
+local orange = "#fc5e03"
+local wpink = "#d442f5"
+
     txt = txt:gsub("local", '<font color="'..pink..'">local</font>')
     txt = txt:gsub("function", '<font color="'..pink..'">function</font>')
     txt = txt:gsub("end", '<font color="'..pink..'">end</font>')
@@ -69,7 +71,13 @@ local cyan = "#34baeb"
 txt = txt:gsub("new", '<font color="'..cyan..'">new</font>')
 txt = txt:gsub("Connect", '<font color="'..blue..'">Connect</font>')
 txt = txt:gsub("getgenv", '<font color="'..cyan..'">getgenv</font>')
-
+txt = txt:gsub("if", '<font color="'..pink..'">if</font>')
+txt = txt:gsub("elseif", '<font color="'..pink..'">elseif</font>')
+txt = txt:gsub("FireServer", '<font color="'..orange..'">FireServer</font>')
+txt = txt:gsub("InvokeServer", '<font color="'..blue..'">InvokeServer</font>')
+txt = txt:gsub("Workspace", '<font color="'..cyan..'">Workspace</font>')
+txt = txt:gsub("getrenv", '<font color="'..wpink..'">getrenv</font>')
+txt = txt:gsub("GetService", '<font color="'..cyan..'">GetService</font>')
     return txt
 end 
 
