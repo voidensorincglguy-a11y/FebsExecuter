@@ -20,7 +20,7 @@ local UCC7 = Instance.new("UICorner", btn3)
 
 UCC_Cmd.CornerRadius = UDim.new(0, 2) 
 Command.Size = UDim2.new(0.7, 0, 0.9, 0) 
-Command.Position = UDim2.new(0.2, 0, 0.5, 0) 
+Command.Position = UDim2.new(0.2, 0, 0.1, 0) 
 Command.BackgroundColor3 = Color3.fromRGB(30, 30, 30) 
 
 btn2.Position = UDim2.new(0.327, 0, 0.928, 0) 
