@@ -162,7 +162,7 @@ btn.TextSize = 20
 btn2.MouseButton1Click:Connect(function() 
     Command.Visible = false 
     btn3.Visible = true 
-    SFile.Visible = true
+    SFile.Visible = false
 end) 
 
 btn3.MouseButton1Click:Connect(function() 
