@@ -7,6 +7,7 @@ local sf = Instance.new("ScrollingFrame", Command)
 local tb = Instance.new("TextBox", sf) 
 local btn = Instance.new("TextButton", Command) 
 local btn2 = Instance.new("TextButton", Command) 
+local SFile = Instance.new("Frame", screenGui)
 
 local UCC6 = Instance.new("UICorner", btn) 
 local UCC = Instance.new("UIStroke", btn) 
@@ -17,11 +18,20 @@ local UCC4 = Instance.new("UIStroke", Command)
 local UCC5 = Instance.new("UIStroke", tb) 
 local UCC6_2 = Instance.new("UICorner", btn2) -- FIXED: Changed from duplicate UCC6 to UCC6_2
 local UCC7 = Instance.new("UICorner", btn3) 
+local UCC8 = Instance.new("UICorner", SFile)
+local UCC9 = Instance.new("UIStroke", SFile)
+local UCC10 = Instance.new("UIGradient", Command)
 
 UCC_Cmd.CornerRadius = UDim.new(0, 2) 
 Command.Size = UDim2.new(0.868, 0, 0.733, 0) 
 Command.Position = UDim2.new(0.033, 0, 0.093, 0) 
 Command.BackgroundColor3 = Color3.fromRGB(30, 30, 30) 
+
+SFile.Position = UDim2.new(0.079, 0, 0.009, 0)
+SFile.Size = UDim2.new(0.782, 0, 0.46, 0)
+SFile.BackgroundColor3 = Color3.fromRGB(5,5,5)
+SFile.ZIndex = 0.5
+
 
 btn2.Position = UDim2.new(0.327, 0, 0.928, 0) 
 btn2.Size = UDim2.new(0.341, 0, 0.046, 0) 
@@ -156,11 +166,13 @@ btn.TextSize = 20
 btn2.MouseButton1Click:Connect(function() 
     Command.Visible = false 
     btn3.Visible = true 
+SFile.Visible = True
 end) 
 
 btn3.MouseButton1Click:Connect(function() 
     Command.Visible = true 
-    btn3.Visible = false 
+    btn3.Visible = false
+SFile.Visible = true
 end) 
 
 btn.MouseButton1Click:Connect(function() 
