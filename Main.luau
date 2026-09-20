@@ -1,4 +1,4 @@
-elocal players = game:GetService("Players")
+local players = game:GetService("Players")
 local player = players.LocalPlayer
 
 local screenGui = Instance.new("ScreenGui", player.PlayerGui)
