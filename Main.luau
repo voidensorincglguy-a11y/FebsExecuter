@@ -18,6 +18,8 @@ local UCC5 = Instance.new("UIStroke", tb)
 local UCC6 = Instance.new("UICorner", btn2)
 local UCC7 = Instance.new("UICorner", btn3)
 
+UCC4.CornerRadius = UDim.new(0,2)
+
 Command.Size = UDim2.new(0.5, 0, 0.7, 0)
 Command.Position = UDim2.new(0.2, 0, 0.1, 0)
 Command.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
