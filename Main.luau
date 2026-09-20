@@ -57,7 +57,7 @@ tb.TextColor3 = Color3.fromRGB(255, 255, 255)
 tb.TextTransparency = 1 
 tb.Text = "print('Hello world')" 
 tb.TextSize = 16 
-tb.ZIndex = 2 
+tb.ZIndex = 3
 
 -- 2. VISIBLE COLOR LABEL (The highlights) 
 local hl = Instance.new("TextLabel", sf) 
@@ -69,7 +69,7 @@ hl.BackgroundTransparency = 1
 hl.TextColor3 = Color3.fromRGB(255, 255, 255) 
 hl.RichText = true 
 hl.TextSize = 16 
-hl.ZIndex = 3 
+hl.ZIndex = 2
 hl.Text = "print('Hello world')" 
 
 -- 3. THE CLEAN COLOR FUNCTION 
