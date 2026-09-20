@@ -22,10 +22,12 @@ local UCC8 = Instance.new("UICorner", SFile)
 local UCC9 = Instance.new("UIStroke", SFile)
 local UCC10 = Instance.new("UIGradient", Command)
 
-UCC_Cmd.CornerRadius = UDim.new(0, 2) 
+screenGui.ResetOnSpawn = false
+
+UCC_Cmd.CornerRadius = UDim.new(0, 4)
 UCC10.Color = ColorSequence.new({
     ColorSequenceKeypoint.new(0, Color3.fromRGB(60, 60, 60)), 
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0))
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(30, 30, 30))
 })
 Command.Size = UDim2.new(0.868, 0, 0.733, 0) 
 Command.Position = UDim2.new(0.033, 0, 0.093, 0) 
