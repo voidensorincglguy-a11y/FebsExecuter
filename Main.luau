@@ -1,4 +1,4 @@
-local players = game:GetService("Players")
+elocal players = game:GetService("Players")
 local player = players.LocalPlayer
 
 local screenGui = Instance.new("ScreenGui", player.PlayerGui)
@@ -95,7 +95,7 @@ txt = txt:gsub("new", '<font color="'..cyan..'">new</font>')
 txt = txt:gsub("Connect", '<font color="'..blue..'">Connect</font>')
 txt = txt:gsub("getgenv", '<font color="'..cyan..'">getgenv</font>')
 txt = txt:gsub("if", '<font color="'..pink..'">if</font>')
-txt = txt:gsub("elseif", '<font color="'..pink..'">elseif</font>')
+txt = txt:gsub("else", '<font color="'..pink..'">elseif</font>')
 txt = txt:gsub("FireServer", '<font color="'..orange..'">FireServer</font>')
 txt = txt:gsub("InvokeServer", '<font color="'..blue..'">InvokeServer</font>')
 txt = txt:gsub("Workspace", '<font color="'..cyan..'">Workspace</font>')
@@ -106,6 +106,9 @@ txt = txt:gsub("Enum", '<font color="'..green..'">Enum</font>')
 txt = txt:gsub("==", '<font color="'..pink..'">==</font>')
 txt = txt:gsub("task", '<font color="'..cyan..'">task</font>')
 txt = txt:gsub("wait", '<font color="'..blue..'">wait</font>')
+txt = txt:gsub("while", '<font color="'..pink..'">while</font>')
+txt = txt:gsub("do", '<font color="'..pink..'">do</font>')
+
     return txt
 end 
 
