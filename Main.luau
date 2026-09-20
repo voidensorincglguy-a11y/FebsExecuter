@@ -188,7 +188,7 @@ local Funcs = getrawmetatable(game)
 local OIndex = Funcs.__index
 setreadonly(Funcs, false)
 
-mt.__index = newcclosure(function(object, key)
+Funcs.__index = newcclosure(function(object, key)
 
 if object == "Part" and key == "TeleportRootPart" and object.Name == "HumanoidRootPart" and object then
 return function(TPpart, x, y, z)
