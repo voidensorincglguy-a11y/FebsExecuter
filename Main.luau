@@ -178,9 +178,18 @@ setreadonly(Funcs, false)
 
 Funcs.__index = newcclosure(function(object, key)
     -- FIXED: Changed string check to instance check, and fixed name matching
-    if typeof(object) == "Instance" and object:IsA("BasePart") and object.Name == "HumanoidRootPart" and key == "TeleportRootPart" then
-        return function(self, TPpart, x, y, z)
-            self.CFrame = TPpart.CFrame + Vector3.new(x, y, z)
+    if typeof(object) == "Instance" then
+        
+        -- 2. Check for your custom function
+        if key == "TeleportRootPart" then
+            -- Safely check the Part type and Name without triggering an infinite loop
+            if object:IsA("BasePart") and object.Name == "HumanoidRootPart" then
+                return function(self, TPpart, x, y, z)
+                    if TPpart and TPpart:IsA("BasePart") then
+                        self.CFrame = TPpart.CFrame + Vector3.new(x, y, z)
+                    end
+                end
+            end
         end
     end
 
