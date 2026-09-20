@@ -92,6 +92,25 @@ local function ApplyColors(txt)
     local orange = "#fc5e03" 
     local wpink = "#d442f5" 
     local green = "#149e11" 
+    local stringGreen = "#A6E22E" -- Your green string color
+
+    -- ========================================================
+    -- STEP 1: HIDE THE STRINGS
+    -- This saves everything inside quotes so keywords can't touch them
+    -- ========================================================
+    local savedStrings = {}
+    local stringCount = 0
+
+    local function hideString(str)
+        stringCount = stringCount + 1
+        savedStrings[stringCount] = str
+        return "___STRVALUE_" .. stringCount .. "___" -- Safe placeholder
+    end
+
+    txt = txt:gsub('(".-")', hideString) -- Captures double quote strings
+    txt = txt:gsub("('.-')", hideString) -- Captures single quote strings
+
+
 
     txt = txt:gsub("local", '<font color="'..pink..'">local</font>') 
     txt = txt:gsub("function", '<font color="'..pink..'">function</font>') 
