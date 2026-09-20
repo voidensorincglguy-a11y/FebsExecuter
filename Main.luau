@@ -190,7 +190,7 @@ setreadonly(Funcs, false)
 
 mt.__index = newcclosure(function(object, key)
 
-if object == "Part" and key == "TeleportRootPart" then
+if object == "Part" and key == "TeleportRootPart" and object.Name == "HumanoidRootPart" and object then
 return function(TPpart, x, y, z)
 object.CFrame = TPpart.CFrame + Vector3.new(x,y,z)
 end
