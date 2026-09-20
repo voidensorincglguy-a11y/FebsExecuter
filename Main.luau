@@ -58,6 +58,7 @@ tb.TextTransparency = 1
 tb.Text = "print('Hello world')" 
 tb.TextSize = 16 
 tb.ZIndex = 3
+tb.Visible = true
 
 -- 2. VISIBLE COLOR LABEL (The highlights) 
 local hl = Instance.new("TextLabel", sf) 
@@ -120,12 +121,14 @@ hl.Text = ApplyColors(tb.Text)
 tb.Focused:Connect(function() 
     tb.TextTransparency = 0 
     hl.Visible = false 
+tb.Visible = true
 end) 
 
 tb.FocusLost:Connect(function() 
     tb.TextTransparency = 1 
     hl.Text = ApplyColors(tb.Text) 
     hl.Visible = true 
+tb.Visible = false
 end) 
 
 -- ======================================================== 
