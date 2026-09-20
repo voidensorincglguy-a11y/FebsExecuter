@@ -18,7 +18,7 @@ local UCC5 = Instance.new("UIStroke", tb)
 local UCC6 = Instance.new("UICorner", btn2)
 local UCC7 = Instance.new("UICorner", btn3)
 
-UCC4.CornerRadius = UDim.new(0,2)
+UCC_Cmd.CornerRadius = UDim.new(0,2)
 
 Command.Size = UDim2.new(0.5, 0, 0.7, 0)
 Command.Position = UDim2.new(0.2, 0, 0.1, 0)
