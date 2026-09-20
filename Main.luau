@@ -98,19 +98,7 @@ local function ApplyColors(txt)
     -- STEP 1: HIDE THE STRINGS
     -- This saves everything inside quotes so keywords can't touch them
     -- ========================================================
-    local savedStrings = {}
-    local stringCount = 0
-
-    local function hideString(str)
-        stringCount = stringCount + 1
-        savedStrings[stringCount] = str
-        return "___STRVALUE_" .. stringCount .. "___" -- Safe placeholder
-    end
-
-    txt = txt:gsub('(".-")', hideString) -- Captures double quote strings
-    txt = txt:gsub("('.-')", hideString) -- Captures single quote strings
-
-
+    
 
     txt = txt:gsub("local", '<font color="'..pink..'">local</font>') 
     txt = txt:gsub("function", '<font color="'..pink..'">function</font>') 
@@ -193,6 +181,25 @@ btn3.MouseButton1Click:Connect(function()
     btn3.Visible = false
 SFile.Visible = true
 end) 
+
+-- The Built in Executer Function.
+
+local Funcs = getrawmetatable(game)
+local OIndex = Funcs.__index
+setreadonly(Funcs, false)
+
+mt.__index = newcclosure(function(object, key)
+
+if object == "Part" and key == "TeleportRootPart" then
+return function(TPpart, x, y, z)
+object.CFrame = TPpart.CFrame + Vector3.new(x,y,z)
+end
+end
+
+end)
+
+setreadonly(Funcs, true)
+
 
 btn.MouseButton1Click:Connect(function() 
     loadstring(tb.Text)() 
