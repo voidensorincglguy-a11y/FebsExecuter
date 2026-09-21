@@ -22,11 +22,15 @@ local UCC8 = Instance.new("UICorner", SFile)
 local UCC9 = Instance.new("UIStroke", SFile)
 local UCC10 = Instance.new("UIGradient", Command)
 local UCC11 = Instance.new("UIStroke", sf)
+local UCC12 = Instance.new("UIStroke", btn3)
 
 screenGui.ResetOnSpawn = false
-UCC8.CornerRadius = UDim.new(0, 64)
+UCC7.CornerRadius = UDim.new(0, 64)
 UCC4.Thickness = 3
 UCC4.Color = Color3.fromRGB(255,255,255)
+UCC12.Color = Color3.fromRGB(255,255,255)
+UCC12.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+
 UCC11.Thickness = 1
 UCC11.Color = Color3.fromRGB(255,255,255)
 UCC9.Color = Color3.fromRGB(255,255,255)
@@ -106,12 +110,21 @@ local function ApplyColors(txt)
     local wpink = "#d442f5" 
     local green = "#149e11" 
 
+local val = string.split(txt, "")
+
+for _, v in pairs(val) do
+local v2 = tonumber(v)
+if v2 == 0 or v2 == 1 or v2 == 2 or v2 == 3 or v2 == 4 or v2 == 5 or v2 == 6 or v2 == 7 or v2 == 8 or v2 == 9 then
+return '<font color"'..blue..'">'..tostring(v2)..'"</font>'
+end
+end
+
     txt = txt:gsub("local", '<font color="'..pink..'">local</font>') 
     txt = txt:gsub("function", '<font color="'..pink..'">function</font>') 
     txt = txt:gsub("end", '<font color="'..pink..'">end</font>') 
     txt = txt:gsub("print", '<font color="'..blue..'">print</font>') 
     txt = txt:gsub("game", '<font color="'..blue..'">game</font>') 
-    txt = txt:gsub("true", '<font color="'..yellow..'">true</font>') 
+    txt = txt:gsub("true", '<font color="'..yellow..'"> true</font>') 
     txt = txt:gsub("false", '<font color="'..yellow..'">false</font>') 
     txt = txt:gsub("return", '<font color="'..pink..'">return</font>') 
     txt = txt:gsub("new", '<font color="'..cyan..'">new</font>') 
