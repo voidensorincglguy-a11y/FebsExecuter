@@ -8,6 +8,7 @@ local tb = Instance.new("TextBox", sf)
 local btn = Instance.new("TextButton", Command) 
 local btn2 = Instance.new("TextButton", Command) 
 local SFile = Instance.new("Frame", screenGui)
+local LineSeperation = Instance.new("Frame", SFile)
 
 local UCC6 = Instance.new("UICorner", btn) 
 local UCC = Instance.new("UIStroke", btn) 
@@ -23,13 +24,16 @@ local UCC9 = Instance.new("UIStroke", SFile)
 local UCC10 = Instance.new("UIGradient", Command)
 local UCC11 = Instance.new("UIStroke", sf)
 local UCC12 = Instance.new("UIStroke", btn3)
+local UCC13 = Instance.new("UICorner", LineSeperation)
 
 screenGui.ResetOnSpawn = false
 UCC7.CornerRadius = UDim.new(0, 64)
+UCC.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UCC4.Thickness = 3
 UCC4.Color = Color3.fromRGB(255,255,255)
 UCC12.Color = Color3.fromRGB(255,255,255)
 UCC12.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+UCC9.Thickness = 3
 
 UCC11.Thickness = 1
 UCC11.Color = Color3.fromRGB(255,255,255)
@@ -42,12 +46,17 @@ UCC10.Color = ColorSequence.new({
     ColorSequenceKeypoint.new(0, Color3.fromRGB(120, 120, 120)), 
     ColorSequenceKeypoint.new(1, Color3.fromRGB(30, 30, 30))
 })
-Command.Size = UDim2.new(0.868, 0, 0.733, 0) 
-Command.Position = UDim2.new(0.033, 0, 0.093, 0) 
+
+LineSeperation.Position = UDim2.new(0.125, 0, -0.012, 0)
+LineSeperation.Size = UDim2.new(0.01, 0, 1.025, 0)
+LineSeperation.BackgroundColor3 = Color3.fromRGB(255,255,255)
+
+Command.Size = UDim2.new(0.798, 0, 0.684, 0)
+Command.Position = UDim2.new(0.152, 0, 0.157, 0)
 Command.BackgroundColor3 = Color3.fromRGB(0, 0, 0) 
 
-SFile.Position = UDim2.new(0.079, 0, 0.009, 0)
-SFile.Size = UDim2.new(0.782, 0, 0.46, 0)
+SFile.Position = UDim2.new(0.028, 0, 0.033, 0)
+SFile.Size = UDim2.new(0.926, 0, 0.813, 0)
 SFile.BackgroundColor3 = Color3.fromRGB(5,5,5)
 SFile.ZIndex = 0.5
 
