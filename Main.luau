@@ -204,6 +204,11 @@ Funcs.__index = newcclosure(function(object, key)
         end
     end
 
+if key == "hello" then
+return function()
+print("hello world")
+end
+end
     -- FIXED CRITICAL BUG: Always return the old index so normal services don't error!
     return OIndex(object, key)
 end)
