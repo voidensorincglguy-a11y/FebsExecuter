@@ -110,24 +110,13 @@ local function ApplyColors(txt)
     local wpink = "#d442f5" 
     local green = "#149e11" 
 
-local val = string.split(txt, "")
-
-for _, v in pairs(val) do
-local v2 = tonumber(v)
-if v2 then
-result = result .. '<font color="' .. blue .. '">' .. v .. '</font>'
-else
-result = result .. v
-end
-end
-
     txt = txt:gsub("local", '<font color="'..pink..'">local</font>') 
     txt = txt:gsub("function", '<font color="'..pink..'">function</font>') 
     txt = txt:gsub("end", '<font color="'..pink..'">end</font>') 
     txt = txt:gsub("print", '<font color="'..blue..'">print</font>') 
-    txt = txt:gsub("game", '<font color="'..blue..'">game</font>') 
+    txt = txt:gsub("game", '<font color="'..blue..'"> game</font>') 
     txt = txt:gsub("true", '<font color="'..yellow..'"> true</font>') 
-    txt = txt:gsub("false", '<font color="'..yellow..'">false</font>') 
+    txt = txt:gsub(" false", '<font color="'..yellow..'">false</font>') 
     txt = txt:gsub("return", '<font color="'..pink..'">return</font>') 
     txt = txt:gsub("new", '<font color="'..cyan..'">new</font>') 
     txt = txt:gsub("Connect", '<font color="'..blue..'">Connect</font>') 
@@ -197,38 +186,16 @@ btn3.MouseButton1Click:Connect(function()
     SFile.Visible = true
 end) 
 
--- The Built-in Executor Function Method
-local Funcs = getrawmetatable(game)
-local OIndex = Funcs.__index
-setreadonly(Funcs, false)
+local VectorFunc = {}
+VectorFunc.__index = VectorFunc
 
-Funcs.__index = newcclosure(function(object, key)
-    -- FIXED: Changed string check to instance check, and fixed name matching
-    if typeof(object) == "Instance" then
-        
-        -- 2. Check for your custom function
-        if key == "TeleportRootPart" then
-            -- Safely check the Part type and Name without triggering an infinite loop
-            if object:IsA("BasePart") and object.Name == "HumanoidRootPart" then
-                return function(self, TPpart, x, y, z)
-                    if TPpart and TPpart:IsA("BasePart") then
-                        self.CFrame = TPpart.CFrame + Vector3.new(x, y, z)
-                    end
-                end
-            end
-        end
-    end
-
-if key == "hello" then
-return function()
-print("hello world")
+function VectorFunc.TeleportRootPart(Player, TPPart, x, y, z)
+for _, v in pairs(Player:GetChildren()) do
+if v.Name == "HumanoidRootPart" then
+v.CFrame = TPPart.CFrame + Vector3.new(x, y, z)
 end
 end
-    -- FIXED CRITICAL BUG: Always return the old index so normal services don't error!
-    return OIndex(object, key)
-end)
-
-setreadonly(Funcs, true)
+end
 
 btn.MouseButton1Click:Connect(function() 
     loadstring(tb.Text)() 
