@@ -149,6 +149,7 @@ local function ApplyColors(txt)
     return txt 
 end 
 
+task.wait(.1)
 hl.Text = ApplyColors(tb.Text) 
 
 -- FOCUS LOGIC 
