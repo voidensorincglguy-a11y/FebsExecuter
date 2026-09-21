@@ -21,17 +21,26 @@ local UCC7 = Instance.new("UICorner", btn3)
 local UCC8 = Instance.new("UICorner", SFile)
 local UCC9 = Instance.new("UIStroke", SFile)
 local UCC10 = Instance.new("UIGradient", Command)
+local UCC11 = Instance.new("UIStroke", sf)
 
 screenGui.ResetOnSpawn = false
+UCC8.CornerRadius = UDim.new(0, 64)
+UCC4.Thickness = 3
+UCC4.Color = Color3.fromRGB(255,255,255)
+UCC11.Thickness = 1
+UCC11.Color = Color3.fromRGB(255,255,255)
+UCC9.Color = Color3.fromRGB(255,255,255)
+UCC.Color = Color3.fromRGB(255,255,255)
 
+UCC9.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UCC_Cmd.CornerRadius = UDim.new(0, 4)
 UCC10.Color = ColorSequence.new({
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(60, 60, 60)), 
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(120, 120, 120)), 
     ColorSequenceKeypoint.new(1, Color3.fromRGB(30, 30, 30))
 })
 Command.Size = UDim2.new(0.868, 0, 0.733, 0) 
 Command.Position = UDim2.new(0.033, 0, 0.093, 0) 
-Command.BackgroundColor3 = Color3.fromRGB(30, 30, 30) 
+Command.BackgroundColor3 = Color3.fromRGB(0, 0, 0) 
 
 SFile.Position = UDim2.new(0.079, 0, 0.009, 0)
 SFile.Size = UDim2.new(0.782, 0, 0.46, 0)
