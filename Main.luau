@@ -114,8 +114,10 @@ local val = string.split(txt, "")
 
 for _, v in pairs(val) do
 local v2 = tonumber(v)
-if v2 == 0 or v2 == 1 or v2 == 2 or v2 == 3 or v2 == 4 or v2 == 5 or v2 == 6 or v2 == 7 or v2 == 8 or v2 == 9 then
-return '<font color"'..blue..'">'..tostring(v2)..'</font>'
+if v2 then
+result = result .. '<font color="' .. blue .. '">' .. v .. '</font>'
+else
+result = result .. v
 end
 end
 
