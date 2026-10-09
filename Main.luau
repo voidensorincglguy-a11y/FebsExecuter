@@ -109,88 +109,129 @@ hl.TextSize = 16
 hl.ZIndex = 2
 hl.Text = "print('Hello world')" 
 
-local function ApplyColors(txt: string): string
-    -- Palette definition
-    local pink   = "#F92672" 
-    local blue   = "#66D9EF" 
-    local yellow = "#ebd534" 
-    local cyan   = "#34baeb" 
-    local orange = "#fc5e03" 
-    local wpink  = "#d442f5" 
-    local green  = "#149e11" 
+local function ApplyColors(input: string): string
+	-- Palette definition (Hex codes)
+	local pink   = "#F92672" 
+	local blue   = "#66D9EF" 
+	local yellow = "#ebd534" 
+	local cyan   = "#34baeb" 
+	local orange = "#fc5e03" 
+	local wpink  = "#d442f5" 
+	local green  = "#149e11" 
 
-    -- Color lookup table for keywords and operators
-    local colorMap = {
-        -- Keywords (Pink)
-        ["local"]    = pink,
-        ["function"] = pink,
-        ["end"]      = pink,
-        ["return"]   = pink,
-        ["if"]       = pink,
-        ["elseif"]   = pink,
-        ["else"]     = pink,
-        ["then"]     = pink,
-        ["while"]    = pink,
-        ["do"]       = pink,
-        ["for"]      = pink,
-        ["=="]       = pink,
-        ["("]        = pink,
-        [")"]        = pink,
+	-- Color lookup dictionary for keywords, functions, and operators
+	local colorMap: { [string]: string } = {
+		-- Keywords (Pink)
+		["local"]    = pink,
+		["function"] = pink,
+		["end"]      = pink,
+		["return"]   = pink,
+		["if"]       = pink,
+		["elseif"]   = pink,
+		["else"]     = pink,
+		["then"]     = pink,
+		["while"]    = pink,
+		["do"]       = pink,
+		["for"]      = pink,
+		["=="]       = pink,
+		["("]        = pink,
+		[")"]        = pink,
 
-        -- Built-ins & Methods (Blue)
-        ["print"]        = blue,
-        ["game"]         = blue,
-        ["Connect"]      = blue,
-        ["InvokeServer"] = blue,
-        ["wait"]         = blue,
+		-- Built-ins & Methods (Blue)
+		["print"]        = blue,
+		["game"]         = blue,
+		["Connect"]      = blue,
+		["InvokeServer"] = blue,
+		["wait"]         = blue,
 
-        -- Booleans (Yellow)
-        ["true"]  = yellow,
-        ["false"] = yellow,
+		-- Booleans (Yellow)
+		["true"]  = yellow,
+		["false"] = yellow,
 
-        -- Services & Environments (Cyan)
-        ["new"]        = cyan,
-        ["getgenv"]    = cyan,
-        ["Workspace"]  = cyan,
-        ["GetService"] = cyan,
-        ["task"]       = cyan,
+		-- Services & Globals (Cyan)
+		["new"]        = cyan,
+		["getgenv"]    = cyan,
+		["Workspace"]  = cyan,
+		["GetService"] = cyan,
+		["task"]       = cyan,
 
-        -- Custom / Remotes
-        ["FireServer"] = orange,
-        ["getrenv"]    = wpink,
-        ["Enum"]       = green,
-    }
+		-- Remotes & Advanced (Orange, Purple, Green)
+		["FireServer"] = orange,
+		["getrenv"]    = wpink,
+		["Enum"]       = green,
+	}
 
-    -- 1. Highlight Strings (Green) - Handles both double and single quotes
-    txt = txt:gsub('".-"', function(str)
-        return string.format('<font color="%s">%s</font>', green, str)
-    end)
-    txt = txt:gsub("'-.'", function(str)
-        return string.format('<font color="%s">%s</font>', green, str)
-    end)
+	-- 1. Step One: Escape XML special characters so RichText parser does not break
+	local txt = input:gsub("&", "&amp;")
+	txt = txt:gsub("<", "&lt;")
+	txt = txt:gsub(">", "&gt;")
 
-    -- 2. Highlight Symbols
-    txt = txt:gsub("==", string.format('<font color="%s">==</font>', colorMap["=="]))
-    txt = txt:gsub("%(", string.format('<font color="%s">(</font>', colorMap["("]))
-    txt = txt:gsub("%)", string.format('<font color="%s">)</font>', colorMap[")"]))
+	-- 2. Step Two: Store and replace strings so internal numbers/keywords aren't recolored
+	local stringTokens: { string } = {}
+	
+	-- Double quoted strings
+	txt = txt:gsub('".-"', function(str)
+		table.insert(stringTokens, string.format('<font color="%s">%s</font>', green, str))
+		return `\0STR{#{stringTokens}}\0`
+	end)
+	
+	-- Single quoted strings
+	txt = txt:gsub("'-.'", function(str)
+		table.insert(stringTokens, string.format('<font color="%s">%s</font>', green, str))
+		return `\0STR{#{stringTokens}}\0`
+	end)
 
-    -- 3. Highlight Numbers (Blue)
-    -- Matches negative/positive integers, decimals, and scientific notation (-9, -9e9, -5e-7)
-    txt = txt:gsub("%f[%w_%-]%-?%d+%.?%d*[eE]?%-?%d*%f[%W]", function(num)
-        return string.format('<font color="%s">%s</font>', blue, num)
-    end)
+	-- 3. Step Three: Highlight Operators & Symbols
+	txt = txt:gsub("==", string.format('<font color="%s">==</font>', colorMap["=="]))
+	txt = txt:gsub("%(", string.format('<font color="%s">(</font>', colorMap["("]))
+	txt = txt:gsub("%)", string.format('<font color="%s">)</font>', colorMap[")"]))
 
-    -- 4. Highlight Keywords
-    txt = txt:gsub("%f[%w_]%a+%f[%W]", function(word)
-        local color = colorMap[word]
-        if color then
-            return string.format('<font color="%s">%s</font>', color, word)
-        end
-        return word
-    end)
+	-- 4. Step Four: Highlight Numbers (Blue)
+	-- Handles positive, negative (-9), decimal (3.14), and scientific notation (-9e9, -5e7)
+	txt = txt:gsub("%f[%w_%-]%-?%d+%.?%d*[eE]?%-?%d*%f[%W]", function(num)
+		return string.format('<font color="%s">%s</font>', blue, num)
+	end)
 
-    return txt
+	-- 5. Step Five: Highlight Keywords & Identifiers
+	txt = txt:gsub("%f[%w_]%a+%f[%W]", function(word)
+		local color = colorMap[word]
+		if color then
+			return string.format('<font color="%s">%s</font>', color, word)
+		end
+		return word
+	end)
+
+	-- 6. Step Six: Restore strings back into the text
+	txt = txt:gsub("\0STR(%d+)\0", function(index)
+		return stringTokens[tonumber(index) or 1]
+	end)
+
+	return txt
 end
+
+--------------------------------------------------------------------------------
+-- GUI Implementation Example
+--------------------------------------------------------------------------------
+
+-- Reference your GUI element (Make sure RichText property is enabled!)
+local textLabel = script.Parent :: TextLabel
+textLabel.RichText = true
+
+-- Test code string containing keywords, strings, negative numbers, and scientific numbers
+local sampleCode = [[
+local x = -9e9
+local y = -5e7
+local name = "Player123"
+
+if x == -9 then
+    print("Value is negative 9")
+    game:GetService("Workspace")
+end
+]]
+
+-- Apply syntax highlighting and render
+textLabel.Text = ApplyColors(sampleCode)
+
 
 
 
