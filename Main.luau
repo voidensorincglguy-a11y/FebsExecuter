@@ -211,27 +211,7 @@ end
 
 --------------------------------------------------------------------------------
 -- GUI Implementation Example
---------------------------------------------------------------------------------
-
--- Reference your GUI element (Make sure RichText property is enabled!)
-local textLabel = script.Parent :: TextLabel
-textLabel.RichText = true
-
--- Test code string containing keywords, strings, negative numbers, and scientific numbers
-local sampleCode = [[
-local x = -9e9
-local y = -5e7
-local name = "Player123"
-
-if x == -9 then
-    print("Value is negative 9")
-    game:GetService("Workspace")
-end
-]]
-
--- Apply syntax highlighting and render
-textLabel.Text = ApplyColors(sampleCode)
-
+-------------------------------------------
 
 
 
