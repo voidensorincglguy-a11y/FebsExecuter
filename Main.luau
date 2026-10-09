@@ -161,18 +161,26 @@ local function ApplyColors(txt: string): string
         ["Enum"]       = green,
     }
 
-    -- 1. Highlight symbols (like == or () )
+    -- 1. Highlight Strings (Green) - Handles both double and single quotes
+    txt = txt:gsub('".-"', function(str)
+        return string.format('<font color="%s">%s</font>', green, str)
+    end)
+    txt = txt:gsub("'-.'", function(str)
+        return string.format('<font color="%s">%s</font>', green, str)
+    end)
+
+    -- 2. Highlight Symbols
     txt = txt:gsub("==", string.format('<font color="%s">==</font>', colorMap["=="]))
     txt = txt:gsub("%(", string.format('<font color="%s">(</font>', colorMap["("]))
     txt = txt:gsub("%)", string.format('<font color="%s">)</font>', colorMap[")"]))
 
-    -- 2. Highlight standalone Numbers (Blue)
-    -- Matches integers and decimals (e.g., 100, 3.14, 0.5)
-    txt = txt:gsub("%f[%w_]%d+%.?%d*%f[%W]", function(num)
+    -- 3. Highlight Numbers (Blue)
+    -- Matches negative/positive integers, decimals, and scientific notation (-9, -9e9, -5e-7)
+    txt = txt:gsub("%f[%w_%-]%-?%d+%.?%d*[eE]?%-?%d*%f[%W]", function(num)
         return string.format('<font color="%s">%s</font>', blue, num)
     end)
 
-    -- 3. Highlight keywords with frontier patterns
+    -- 4. Highlight Keywords
     txt = txt:gsub("%f[%w_]%a+%f[%W]", function(word)
         local color = colorMap[word]
         if color then
@@ -183,6 +191,7 @@ local function ApplyColors(txt: string): string
 
     return txt
 end
+
 
 
 task.wait(.1)
