@@ -109,46 +109,81 @@ hl.TextSize = 16
 hl.ZIndex = 2
 hl.Text = "print('Hello world')" 
 
--- 3. THE CLEAN COLOR FUNCTION 
-local function ApplyColors(txt) 
-    local pink = "#F92672" 
-    local blue = "#66D9EF" 
+local function ApplyColors(txt: string): string
+    -- Palette definition
+    local pink   = "#F92672" 
+    local blue   = "#66D9EF" 
     local yellow = "#ebd534" 
-    local cyan = "#34baeb" 
+    local cyan   = "#34baeb" 
     local orange = "#fc5e03" 
-    local wpink = "#d442f5" 
-    local green = "#149e11" 
+    local wpink  = "#d442f5" 
+    local green  = "#149e11" 
 
-    txt = txt:gsub("local", '<font color="'..pink..'">local</font>') 
-    txt = txt:gsub("function", '<font color="'..pink..'">function</font>') 
-    txt = txt:gsub("end", '<font color="'..pink..'">end</font>') 
-    txt = txt:gsub("print", '<font color="'..blue..'">print</font>') 
-    txt = txt:gsub("game", '<font color="'..blue..'"> game</font>') 
-    txt = txt:gsub("true", '<font color="'..yellow..'">true</font>') 
-    txt = txt:gsub("false", '<font color="'..yellow..'">false</font>') 
-    txt = txt:gsub("return", '<font color="'..pink..'">return</font>') 
-    txt = txt:gsub("new", '<font color="'..cyan..'">new</font>') 
-    txt = txt:gsub("Connect", '<font color="'..blue..'">Connect</font>') 
-    txt = txt:gsub("getgenv", '<font color="'..cyan..'">getgenv</font>') 
-    txt = txt:gsub("if", '<font color="'..pink..'">if</font>') 
-    txt = txt:gsub("elseif", '<font color="'..pink..'">elseif</font>') 
-    txt = txt:gsub("else", '<font color="'..pink..'">else</font>') 
-    txt = txt:gsub("FireServer", '<font color="'..orange..'">FireServer</font>') 
-    txt = txt:gsub("InvokeServer", '<font color="'..blue..'">InvokeServer</font>') 
-    txt = txt:gsub("Workspace", '<font color="'..cyan..'">Workspace</font>') 
-    txt = txt:gsub("getrenv", '<font color="'..wpink..'">getrenv</font>') 
-    txt = txt:gsub("GetService", '<font color="'..cyan..'">GetService</font>') 
-    txt = txt:gsub("then", '<font color="'..pink..'">then</font>') 
-    txt = txt:gsub("Enum", '<font color="'..green..'">Enum</font>') 
-    txt = txt:gsub("== ", '<font color="'..pink..'">==</font>') 
-    txt = txt:gsub("task", '<font color="'..cyan..'">task</font>') 
-    txt = txt:gsub("wait", '<font color="'..blue..'">wait</font>') 
-    txt = txt:gsub("while", '<font color="'..pink..'">while</font>') 
-    txt = txt:gsub("do", '<font color="'..pink..'">do</font>') 
-    txt = txt:gsub("for", '<font color="'..pink..'">for</font>') 
-    txt = txt:gsub("(", '<font color="'..pink..'">(</font>')
-    return txt 
-end 
+    -- Color lookup table for keywords and operators
+    local colorMap = {
+        -- Keywords (Pink)
+        ["local"]    = pink,
+        ["function"] = pink,
+        ["end"]      = pink,
+        ["return"]   = pink,
+        ["if"]       = pink,
+        ["elseif"]   = pink,
+        ["else"]     = pink,
+        ["then"]     = pink,
+        ["while"]    = pink,
+        ["do"]       = pink,
+        ["for"]      = pink,
+        ["=="]       = pink,
+        ["("]        = pink,
+        [")"]        = pink,
+
+        -- Built-ins & Methods (Blue)
+        ["print"]        = blue,
+        ["game"]         = blue,
+        ["Connect"]      = blue,
+        ["InvokeServer"] = blue,
+        ["wait"]         = blue,
+
+        -- Booleans (Yellow)
+        ["true"]  = yellow,
+        ["false"] = yellow,
+
+        -- Services & Environments (Cyan)
+        ["new"]        = cyan,
+        ["getgenv"]    = cyan,
+        ["Workspace"]  = cyan,
+        ["GetService"] = cyan,
+        ["task"]       = cyan,
+
+        -- Custom / Remotes
+        ["FireServer"] = orange,
+        ["getrenv"]    = wpink,
+        ["Enum"]       = green,
+    }
+
+    -- 1. Highlight symbols (like == or () )
+    txt = txt:gsub("==", string.format('<font color="%s">==</font>', colorMap["=="]))
+    txt = txt:gsub("%(", string.format('<font color="%s">(</font>', colorMap["("]))
+    txt = txt:gsub("%)", string.format('<font color="%s">)</font>', colorMap[")"]))
+
+    -- 2. Highlight standalone Numbers (Blue)
+    -- Matches integers and decimals (e.g., 100, 3.14, 0.5)
+    txt = txt:gsub("%f[%w_]%d+%.?%d*%f[%W]", function(num)
+        return string.format('<font color="%s">%s</font>', blue, num)
+    end)
+
+    -- 3. Highlight keywords with frontier patterns
+    txt = txt:gsub("%f[%w_]%a+%f[%W]", function(word)
+        local color = colorMap[word]
+        if color then
+            return string.format('<font color="%s">%s</font>', color, word)
+        end
+        return word
+    end)
+
+    return txt
+end
+
 
 task.wait(.1)
 hl.Text = ApplyColors(tb.Text) 
