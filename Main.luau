@@ -105,7 +105,7 @@ hl.TextYAlignment = Enum.TextYAlignment.Top
 hl.BackgroundTransparency = 1 
 hl.TextColor3 = Color3.fromRGB(255, 255, 255) 
 hl.RichText = true 
-hl.TextSize = 16 
+hl.TextSize = 8
 hl.ZIndex = 2
 hl.Text = "print('Hello world')" 
 
