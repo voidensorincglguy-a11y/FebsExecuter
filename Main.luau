@@ -109,8 +109,10 @@ hl.TextSize = 16
 hl.ZIndex = 2
 hl.Text = "print('Hello world')" 
 
+
+
 local function ApplyColors(input: string): string
-	-- Palette definition (Hex codes)
+	-- Palette definition
 	local pink   = "#F92672" 
 	local blue   = "#66D9EF" 
 	local yellow = "#ebd534" 
@@ -119,9 +121,8 @@ local function ApplyColors(input: string): string
 	local wpink  = "#d442f5" 
 	local green  = "#149e11" 
 
-	-- Color lookup dictionary for keywords, functions, and operators
+	-- Color lookup table
 	local colorMap: { [string]: string } = {
-		-- Keywords (Pink)
 		["local"]    = pink,
 		["function"] = pink,
 		["end"]      = pink,
@@ -133,66 +134,71 @@ local function ApplyColors(input: string): string
 		["while"]    = pink,
 		["do"]       = pink,
 		["for"]      = pink,
+		["and"]      = pink,
+		["not"]      = pink,
+		["or"]       = pink,
 		["=="]       = pink,
-		["("]        = pink,
-		[")"]        = pink,
+		["("]        = yellow,
+		[")"]        = yellow,
 
-		-- Built-ins & Methods (Blue)
-		["print"]        = blue,
-		["game"]         = blue,
-		["Connect"]      = blue,
-		["InvokeServer"] = blue,
-		["wait"]         = blue,
+		["print"]          = blue,
+		["game"]           = blue,
+		["Connect"]        = blue,
+		["InvokeServer"]   = blue,
+		["wait"]           = blue,
+		["hookmetamethod"] = blue,
+		["getnamecall"]    = blue,
+		["checkcall"]      = blue,
+		["unpack"]         = blue,
 
-		-- Booleans (Yellow)
 		["true"]  = yellow,
 		["false"] = yellow,
+		["nil"]   = yellow,
 
-		-- Services & Globals (Cyan)
-		["new"]        = cyan,
-		["getgenv"]    = cyan,
-		["Workspace"]  = cyan,
-		["GetService"] = cyan,
-		["task"]       = cyan,
+		["Vector3"]     = cyan,
+		["new"]         = cyan,
+		["getgenv"]     = cyan,
+		["workspace"]   = cyan,
+		["Workspace"]   = cyan,
+		["GetService"]  = cyan,
+		["task"]        = cyan,
 
-		-- Remotes & Advanced (Orange, Purple, Green)
 		["FireServer"] = orange,
 		["getrenv"]    = wpink,
 		["Enum"]       = green,
 	}
 
-	-- 1. Step One: Escape XML special characters so RichText parser does not break
+	-- 1. Escape XML characters first
 	local txt = input:gsub("&", "&amp;")
 	txt = txt:gsub("<", "&lt;")
 	txt = txt:gsub(">", "&gt;")
 
-	-- 2. Step Two: Store and replace strings so internal numbers/keywords aren't recolored
-	local stringTokens: { string } = {}
-	
-	-- Double quoted strings
-	txt = txt:gsub('".-"', function(str)
-		table.insert(stringTokens, string.format('<font color="%s">%s</font>', green, str))
-		return `\0STR{#{stringTokens}}\0`
-	end)
-	
-	-- Single quoted strings
-	txt = txt:gsub("'-.'", function(str)
-		table.insert(stringTokens, string.format('<font color="%s">%s</font>', green, str))
-		return `\0STR{#{stringTokens}}\0`
+	-- 2. Store strings in a table and replace them with UNIQUE tokens
+	local stringStorage: { string } = {}
+
+	-- Match double quotes "..."
+	txt = txt:gsub('".-"', function(matchedStr)
+		table.insert(stringStorage, string.format('<font color="%s">%s</font>', green, matchedStr))
+		return "___STRTOKEN_" .. #stringStorage .. "___"
 	end)
 
-	-- 3. Step Three: Highlight Operators & Symbols
+	-- Match single quotes '...'
+	txt = txt:gsub("'-.'", function(matchedStr)
+		table.insert(stringStorage, string.format('<font color="%s">%s</font>', green, matchedStr))
+		return "___STRTOKEN_" .. #stringStorage .. "___"
+	end)
+
+	-- 3. Highlight Symbols
 	txt = txt:gsub("==", string.format('<font color="%s">==</font>', colorMap["=="]))
 	txt = txt:gsub("%(", string.format('<font color="%s">(</font>', colorMap["("]))
 	txt = txt:gsub("%)", string.format('<font color="%s">)</font>', colorMap[")"]))
 
-	-- 4. Step Four: Highlight Numbers (Blue)
-	-- Handles positive, negative (-9), decimal (3.14), and scientific notation (-9e9, -5e7)
+	-- 4. Highlight Numbers (Supports negative, decimal, and scientific notation)
 	txt = txt:gsub("%f[%w_%-]%-?%d+%.?%d*[eE]?%-?%d*%f[%W]", function(num)
 		return string.format('<font color="%s">%s</font>', blue, num)
 	end)
 
-	-- 5. Step Five: Highlight Keywords & Identifiers
+	-- 5. Highlight Keywords
 	txt = txt:gsub("%f[%w_]%a+%f[%W]", function(word)
 		local color = colorMap[word]
 		if color then
@@ -201,13 +207,18 @@ local function ApplyColors(input: string): string
 		return word
 	end)
 
-	-- 6. Step Six: Restore strings back into the text
-	txt = txt:gsub("\0STR(%d+)\0", function(index)
-		return stringTokens[tonumber(index) or 1]
+	-- 6. Restore each unique string by matching its specific ID index
+	txt = txt:gsub("___STRTOKEN_(%d+)___", function(idStr)
+		local index = tonumber(idStr)
+		if index and stringStorage[index] then
+			return stringStorage[index]
+		end
+		return idStr
 	end)
 
 	return txt
 end
+
 
 --------------------------------------------------------------------------------
 -- GUI Implementation Example
