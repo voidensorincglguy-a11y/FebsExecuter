@@ -124,8 +124,8 @@ local function ApplyColors(txt)
     txt = txt:gsub("end", '<font color="'..pink..'">end</font>') 
     txt = txt:gsub("print", '<font color="'..blue..'">print</font>') 
     txt = txt:gsub("game", '<font color="'..blue..'"> game</font>') 
-    txt = txt:gsub("true", '<font color="'..yellow..'"> true</font>') 
-    txt = txt:gsub(" false", '<font color="'..yellow..'">false</font>') 
+    txt = txt:gsub("true", '<font color="'..yellow..'">true</font>') 
+    txt = txt:gsub("false", '<font color="'..yellow..'">false</font>') 
     txt = txt:gsub("return", '<font color="'..pink..'">return</font>') 
     txt = txt:gsub("new", '<font color="'..cyan..'">new</font>') 
     txt = txt:gsub("Connect", '<font color="'..blue..'">Connect</font>') 
@@ -145,7 +145,8 @@ local function ApplyColors(txt)
     txt = txt:gsub("wait", '<font color="'..blue..'">wait</font>') 
     txt = txt:gsub("while", '<font color="'..pink..'">while</font>') 
     txt = txt:gsub("do", '<font color="'..pink..'">do</font>') 
-
+    txt = txt:gsub("for", '<font color="'..pink..'">for</font>') 
+    txt = txt:gsub("(", '<font color="'..pink..'">(</font>')
     return txt 
 end 
 
