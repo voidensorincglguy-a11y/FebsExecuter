@@ -93,7 +93,7 @@ tb.BackgroundTransparency = 1
 tb.TextColor3 = Color3.fromRGB(255, 255, 255) 
 tb.TextTransparency = 1 
 tb.Text = "print('Hello world')" 
-tb.TextSize = 16 
+tb.TextSize = 12
 tb.ZIndex = 3
 
 -- 2. VISIBLE COLOR LABEL (The highlights) 
@@ -105,7 +105,7 @@ hl.TextYAlignment = Enum.TextYAlignment.Top
 hl.BackgroundTransparency = 1 
 hl.TextColor3 = Color3.fromRGB(255, 255, 255) 
 hl.RichText = true 
-hl.TextSize = 8
+hl.TextSize = 12
 hl.ZIndex = 2
 hl.Text = "print('Hello world')" 
 
