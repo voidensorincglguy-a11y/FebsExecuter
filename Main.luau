@@ -120,7 +120,7 @@ local function ApplyColors(input: string): string
 	local orange = "#fc5e03" 
 	local wpink  = "#d442f5" 
 	local green  = "#149e11" 
-
+ local wgreen = "#83d46a"
 	-- Color lookup table
 	local colorMap: { [string]: string } = {
 		["local"]    = pink,
@@ -140,6 +140,8 @@ local function ApplyColors(input: string): string
 		["=="]       = pink,
 		["("]        = yellow,
 		[")"]        = yellow,
+   ["{"}        = yellow,
+   ["}"}        = yellow,
 
 		["print"]          = blue,
 		["game"]           = blue,
@@ -150,6 +152,8 @@ local function ApplyColors(input: string): string
 		["getnamecall"]    = blue,
 		["checkcall"]      = blue,
 		["unpack"]         = blue,
+   ["Players"]        = blue,
+   ["LocalPlayer"]    = cyan
 
 		["true"]  = yellow,
 		["false"] = yellow,
@@ -178,7 +182,7 @@ local function ApplyColors(input: string): string
 
 	-- Match double quotes "..."
 	txt = txt:gsub('".-"', function(matchedStr)
-		table.insert(stringStorage, string.format('<font color="%s">%s</font>', green, matchedStr))
+		table.insert(stringStorage, string.format('<font color="%s">%s</font>', wgreen, matchedStr))
 		return "___STRTOKEN_" .. #stringStorage .. "___"
 	end)
 
@@ -195,7 +199,7 @@ local function ApplyColors(input: string): string
 
 	-- 4. Highlight Numbers (Supports negative, decimal, and scientific notation)
 	txt = txt:gsub("%f[%w_%-]%-?%d+%.?%d*[eE]?%-?%d*%f[%W]", function(num)
-		return string.format('<font color="%s">%s</font>', blue, num)
+		return string.format('<font color="%s">%s</font>', cyan, num)
 	end)
 
 	-- 5. Highlight Keywords
