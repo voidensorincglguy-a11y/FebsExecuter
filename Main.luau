@@ -143,6 +143,7 @@ local function ApplyColors(input: string): string
 		[")"]        = yellow,
    ["{"]        = yellow,
    ["}"]        = yellow,
+   ["\n"]       = pink,
 
 		["print"]          = blue,
 		["game"]           = blue,
@@ -195,7 +196,7 @@ local function ApplyColors(input: string): string
 
 	-- 3. Highlight Symbols
 	txt = txt:gsub("==", string.format('<font color="%s">==</font>', colorMap["=="]))
-txt = txt:gsub("==", string.format('<font color="%s">=</font>', colorMap["="]))
+txt = txt:gsub("=", string.format('<font color="%s">=</font>', colorMap["="]))
 	txt = txt:gsub("%(", string.format('<font color="%s">(</font>', colorMap["("]))
 	txt = txt:gsub("%)", string.format('<font color="%s">)</font>', colorMap[")"]))
 txt = txt:gsub("%{", string.format('<font color="%s">{</font>', colorMap["{"]))
