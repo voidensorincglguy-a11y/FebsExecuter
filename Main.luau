@@ -153,7 +153,7 @@ local function ApplyColors(input: string): string
 		["checkcaller"]      = blue,
 		["unpack"]         = blue,
    ["Players"]        = blue,
-   ["LocalPlayer"]    = cyan
+   ["LocalPlayer"]    = cyan,
 
 		["true"]  = yellow,
 		["false"] = yellow,
@@ -169,7 +169,7 @@ local function ApplyColors(input: string): string
 
 		["FireServer"] = orange,
 		["getrenv"]    = wpink,
-		["Enum"]       = green,
+		["Enum"]       = green
 	}
 
 	-- 1. Escape XML characters first
