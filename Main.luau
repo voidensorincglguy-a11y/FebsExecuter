@@ -138,6 +138,7 @@ local function ApplyColors(input: string): string
 		["not"]      = pink,
 		["or"]       = pink,
 		["=="]       = pink,
+   ["="]        = pink,
 		["("]        = yellow,
 		[")"]        = yellow,
    ["{"]        = yellow,
@@ -194,10 +195,11 @@ local function ApplyColors(input: string): string
 
 	-- 3. Highlight Symbols
 	txt = txt:gsub("==", string.format('<font color="%s">==</font>', colorMap["=="]))
+txt = txt:gsub("==", string.format('<font color="%s">=</font>', colorMap["="]))
 	txt = txt:gsub("%(", string.format('<font color="%s">(</font>', colorMap["("]))
 	txt = txt:gsub("%)", string.format('<font color="%s">)</font>', colorMap[")"]))
-txt = txt:gsub("%{", string.format('<font color="%s">)</font>', colorMap["{"]))
-txt = txt:gsub("%}", string.format('<font color="%s">)</font>', colorMap["}"]))
+txt = txt:gsub("%{", string.format('<font color="%s">{</font>', colorMap["{"]))
+txt = txt:gsub("%}", string.format('<font color="%s">}</font>', colorMap["}"]))
 
 	-- 4. Highlight Numbers (Supports negative, decimal, and scientific notation)
 	txt = txt:gsub("%f[%w_%-]%-?%d+%.?%d*[eE]?%-?%d*%f[%W]", function(num)
