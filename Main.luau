@@ -140,8 +140,8 @@ local function ApplyColors(input: string): string
 		["=="]       = pink,
 		["("]        = yellow,
 		[")"]        = yellow,
-        ["{"]        = yellow,
-        ["}"]        = yellow,
+   ["{"]        = yellow,
+   ["}"]        = yellow,
 
 		["print"]          = blue,
 		["game"]           = blue,
@@ -152,8 +152,8 @@ local function ApplyColors(input: string): string
 		["getnamecall"]    = blue,
 		["checkcaller"]      = blue,
 		["unpack"]         = blue,
-        ["Players"]        = blue,
-        ["LocalPlayer"]    = cyan
+   ["Players"]        = blue,
+   ["LocalPlayer"]    = cyan
 
 		["true"]  = yellow,
 		["false"] = yellow,
@@ -196,6 +196,8 @@ local function ApplyColors(input: string): string
 	txt = txt:gsub("==", string.format('<font color="%s">==</font>', colorMap["=="]))
 	txt = txt:gsub("%(", string.format('<font color="%s">(</font>', colorMap["("]))
 	txt = txt:gsub("%)", string.format('<font color="%s">)</font>', colorMap[")"]))
+txt = txt:gsub("%{", string.format('<font color="%s">)</font>', colorMap["{"]))
+txt = txt:gsub("%}", string.format('<font color="%s">)</font>', colorMap["}"]))
 
 	-- 4. Highlight Numbers (Supports negative, decimal, and scientific notation)
 	txt = txt:gsub("%f[%w_%-]%-?%d+%.?%d*[eE]?%-?%d*%f[%W]", function(num)
