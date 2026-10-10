@@ -120,7 +120,7 @@ local function ApplyColors(input: string): string
 	local orange = "#fc5e03" 
 	local wpink  = "#d442f5" 
 	local green  = "#149e11" 
- local wgreen = "#83d46a"
+    local wgreen = "#83d46a"
 	-- Color lookup table
 	local colorMap: { [string]: string } = {
 		["local"]    = pink,
@@ -140,8 +140,8 @@ local function ApplyColors(input: string): string
 		["=="]       = pink,
 		["("]        = yellow,
 		[")"]        = yellow,
-   ["{"}        = yellow,
-   ["}"}        = yellow,
+        ["{"]        = yellow,
+        ["}"]        = yellow,
 
 		["print"]          = blue,
 		["game"]           = blue,
@@ -150,10 +150,10 @@ local function ApplyColors(input: string): string
 		["wait"]           = blue,
 		["hookmetamethod"] = blue,
 		["getnamecall"]    = blue,
-		["checkcall"]      = blue,
+		["checkcaller"]      = blue,
 		["unpack"]         = blue,
-   ["Players"]        = blue,
-   ["LocalPlayer"]    = cyan
+        ["Players"]        = blue,
+        ["LocalPlayer"]    = cyan
 
 		["true"]  = yellow,
 		["false"] = yellow,
